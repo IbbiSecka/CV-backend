@@ -14,7 +14,7 @@ namespace CV.Repository
 
         public async Task<Ibbi> GetIbbi()
         {
-            return await _db.Ibbis.FirstOrDefaultAsync(x => x.Id == 1);
+            return await _db.Ibbis.FirstAsync(x => x.Id == 1);
         }
     }
 }

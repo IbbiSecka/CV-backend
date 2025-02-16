@@ -14,12 +14,12 @@ namespace CV.Controllers
         private static async Task<IResult> GetIbbz(IUser repo)
         {
 
-            var me = repo.GetIbbi();
+            var me = await repo.GetIbbi();
             if (me == null)
             {
                 return TypedResults.NotFound("User not fetched");
             }
-            return TypedResults.Ok(me);
+            return  TypedResults.Ok(me);
         }
     }
 }
