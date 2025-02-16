@@ -1,0 +1,37 @@
+name: Deploy Backend to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual deployment
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0  # Update to match your version
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ibrahimasecka  # Replace with your actual Azure Web App name
+        slot-name: production
+        package: ./publish
+        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
