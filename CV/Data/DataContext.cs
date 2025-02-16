@@ -1,22 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CV.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CV.Data
 {
     public class DataContext : DbContext
     {
-        private readonly IConfiguration _configuration;
 
-        public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration): base (options)
-        {
-            _configuration = configuration;
-        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = _configuration.GetConnectionString("DefaultConnectionString");
-            optionsBuilder.UseNpgsql(connectionString);
-
-            optionsBuilder.LogTo(message => Debug.WriteLine(message)); // Log SQL queries
+            if (!optionsBuilder.IsConfigured)
+            {
+                Debug.WriteLine("OnConfiguring was called but should be handled via DI.");
+            }
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            Seeder seeder = new Seeder();
+            modelBuilder.Entity<Ibbi>().HasData(seeder.Ibbis);
+        }
+
+
+        public DbSet<Ibbi> Ibbis { get; set; }
     }
 }
