@@ -24,10 +24,17 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString"); 
+
+var environment = builder.Environment.EnvironmentName;
+var connectionString = builder.Configuration.GetConnectionString(
+    environment == "Development" ? "DevDatabase" : "ProdDatabase"
+);
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(connectionString));
+
+Console.WriteLine($"Using DB Connection: {connectionString}");
+
 
 
 var app = builder.Build();
