@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250217093402_DevAndProd")]
-    partial class DevAndProd
+    [Migration("20250217114035_IM")]
+    partial class IM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
