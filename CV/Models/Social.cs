@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public string Img { get; set; }
         public Ibbi Ibbi { get; set; }
+        public int IbbiId { get; set; }
     }
 }

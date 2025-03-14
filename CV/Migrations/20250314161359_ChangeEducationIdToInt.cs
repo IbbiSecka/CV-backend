@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     /// <inheritdoc />
-    public partial class IM : Migration
+    public partial class ChangeEducationIdToInt : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,21 +28,23 @@ namespace CV.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Education",
+                name: "Educations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EducationName = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     EducationSite = table.Column<string>(type: "text", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
+                    Duration = table.Column<string>(type: "text", nullable: false),
                     IbbiId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Education", x => x.Id);
+                    table.PrimaryKey("PK_Educations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Education_Ibbis_IbbiId",
+                        name: "FK_Educations_Ibbis_IbbiId",
                         column: x => x.IbbiId,
                         principalTable: "Ibbis",
                         principalColumn: "Id",
@@ -50,7 +52,7 @@ namespace CV.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Language",
+                name: "Languages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -60,9 +62,9 @@ namespace CV.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Language", x => x.Id);
+                    table.PrimaryKey("PK_Languages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Language_Ibbis_IbbiId",
+                        name: "FK_Languages_Ibbis_IbbiId",
                         column: x => x.IbbiId,
                         principalTable: "Ibbis",
                         principalColumn: "Id",
@@ -70,7 +72,7 @@ namespace CV.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Project",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -84,9 +86,9 @@ namespace CV.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Project", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Project_Ibbis_IbbiId",
+                        name: "FK_Projects_Ibbis_IbbiId",
                         column: x => x.IbbiId,
                         principalTable: "Ibbis",
                         principalColumn: "Id",
@@ -94,7 +96,7 @@ namespace CV.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ResumeExperience",
+                name: "ResumeExperiences",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -108,9 +110,9 @@ namespace CV.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ResumeExperience", x => x.Id);
+                    table.PrimaryKey("PK_ResumeExperiences", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ResumeExperience_Ibbis_IbbiId",
+                        name: "FK_ResumeExperiences_Ibbis_IbbiId",
                         column: x => x.IbbiId,
                         principalTable: "Ibbis",
                         principalColumn: "Id",
@@ -118,7 +120,7 @@ namespace CV.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Social",
+                name: "Socials",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -129,9 +131,9 @@ namespace CV.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Social", x => x.Id);
+                    table.PrimaryKey("PK_Socials", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Social_Ibbis_IbbiId",
+                        name: "FK_Socials_Ibbis_IbbiId",
                         column: x => x.IbbiId,
                         principalTable: "Ibbis",
                         principalColumn: "Id",
@@ -144,28 +146,28 @@ namespace CV.Migrations
                 values: new object[] { 1, "18.04.2001", "This is me", "Ibrahima Secka", "" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Education_IbbiId",
-                table: "Education",
+                name: "IX_Educations_IbbiId",
+                table: "Educations",
                 column: "IbbiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Language_IbbiId",
-                table: "Language",
+                name: "IX_Languages_IbbiId",
+                table: "Languages",
                 column: "IbbiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_IbbiId",
-                table: "Project",
+                name: "IX_Projects_IbbiId",
+                table: "Projects",
                 column: "IbbiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ResumeExperience_IbbiId",
-                table: "ResumeExperience",
+                name: "IX_ResumeExperiences_IbbiId",
+                table: "ResumeExperiences",
                 column: "IbbiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Social_IbbiId",
-                table: "Social",
+                name: "IX_Socials_IbbiId",
+                table: "Socials",
                 column: "IbbiId");
         }
 
@@ -173,19 +175,19 @@ namespace CV.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Education");
+                name: "Educations");
 
             migrationBuilder.DropTable(
-                name: "Language");
+                name: "Languages");
 
             migrationBuilder.DropTable(
-                name: "Project");
+                name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "ResumeExperience");
+                name: "ResumeExperiences");
 
             migrationBuilder.DropTable(
-                name: "Social");
+                name: "Socials");
 
             migrationBuilder.DropTable(
                 name: "Ibbis");
