@@ -1,7 +1,12 @@
 using CV.Controllers;
 using CV.Data;
+using CV.Models;
 using CV.Repository;
 using Microsoft.EntityFrameworkCore;
+using static CV.Repository.Education;
+using static CV.Repository.Project;
+using Language = CV.Repository.Language;
+using Project = CV.Repository.Project;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUser, User>();
+builder.Services.AddScoped<ILanguage,Language>();
+builder.Services.AddScoped<IProject, Project>();
+builder.Services.AddScoped<IResume, Resume>();
+builder.Services.AddScoped<IEducation, EducationRepo>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -60,6 +69,10 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 app.configureIbbiController();
+app.configureEducationController();
+app.configureLanguageController();
+app.configureProjectController();
+app.configureResumeController();
 app.UseAuthorization();
 
 app.MapControllers();

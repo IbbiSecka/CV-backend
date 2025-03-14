@@ -9,5 +9,6 @@
         public string Date {  get; set; }
         public string Role { get; set; }
         public Ibbi Ibbi { get; set; }
+        public int IbbiId { get; set; }
     }
 }

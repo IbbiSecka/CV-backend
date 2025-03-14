@@ -1,4 +1,5 @@
 ﻿
+using CV.Models;
 using CV.Repository;
 
 namespace CV.Controllers
@@ -9,6 +10,18 @@ namespace CV.Controllers
         {
             var group = app.MapGroup("/user");
             group.MapGet("/", GetIbbz);
+            group.MapPut("/", UpdateIbz);
+
+            // Projects
+
+
+            // Social Media
+           
+        }
+
+        private static async Task<IResult> UpdateIbz(IUser repo, int id)
+        {
+            throw null;
         }
 
         private static async Task<IResult> GetIbbz(IUser repo)
@@ -21,5 +34,8 @@ namespace CV.Controllers
             }
             return  TypedResults.Ok(me);
         }
+
+      
+       
     }
 }

@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250217114035_IM")]
-    partial class IM
+    [Migration("20250314163715_addedForeignKey")]
+    partial class addedForeignKey
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,14 +26,21 @@ namespace CV.Migrations
 
             modelBuilder.Entity("CV.Models.Education", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Degree")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Duration")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -52,7 +59,7 @@ namespace CV.Migrations
 
                     b.HasIndex("IbbiId");
 
-                    b.ToTable("Education");
+                    b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("CV.Models.Ibbi", b =>
@@ -113,7 +120,7 @@ namespace CV.Migrations
 
                     b.HasIndex("IbbiId");
 
-                    b.ToTable("Language");
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("CV.Models.Project", b =>
@@ -151,7 +158,7 @@ namespace CV.Migrations
 
                     b.HasIndex("IbbiId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("CV.Models.ResumeExperience", b =>
@@ -189,7 +196,7 @@ namespace CV.Migrations
 
                     b.HasIndex("IbbiId");
 
-                    b.ToTable("ResumeExperience");
+                    b.ToTable("ResumeExperiences");
                 });
 
             modelBuilder.Entity("CV.Models.Social", b =>
@@ -215,7 +222,7 @@ namespace CV.Migrations
 
                     b.HasIndex("IbbiId");
 
-                    b.ToTable("Social");
+                    b.ToTable("Socials");
                 });
 
             modelBuilder.Entity("CV.Models.Education", b =>

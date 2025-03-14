@@ -24,5 +24,10 @@ namespace CV.Data
 
 
         public DbSet<Ibbi> Ibbis { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<ResumeExperience> ResumeExperiences { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Social> Socials { get; set; }
+        public DbSet<Education> Educations { get; set; }
     }
 }
