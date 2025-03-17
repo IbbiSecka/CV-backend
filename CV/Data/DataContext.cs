@@ -20,6 +20,30 @@ namespace CV.Data
         {
             Seeder seeder = new Seeder();
             modelBuilder.Entity<Ibbi>().HasData(seeder.Ibbis);
+            modelBuilder.Entity<Education>()
+             .HasOne(e => e.Ibbi)
+             .WithMany(i => i.Educations)
+             .HasForeignKey(e => e.IbbiId)
+             .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Project>()
+                .HasOne(i => i.Ibbi)
+                .WithMany (x => x.Projects)
+                .HasForeignKey(x => x.IbbiId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Language>()
+                .HasOne(i => i.Ibbi)
+                .WithMany(x => x.Languages)
+                .HasForeignKey(k => k.IbbiId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ResumeExperience>()
+                .HasOne( i => i.Ibbi)
+                .WithMany(x => x.resumeExperiences)
+                .HasForeignKey(fk => fk.IbbiId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Social>()
+                .HasOne(i => i.Ibbi)
+                .WithMany( i => i.Socials)
+                .HasForeignKey(i => i.IbbiId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 
