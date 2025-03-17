@@ -22,6 +22,11 @@ namespace CV.Repository
 
             public async Task<Models.Education> Create(Models.Education education)
             {
+               
+
+                // Assign the Ibbi object
+     
+
                 _db.Educations.Add(education);
                 await _db.SaveChangesAsync();
                 return education;
@@ -30,8 +35,9 @@ namespace CV.Repository
             public async Task<Models.Education> Update(int userId, int educationId, Models.Education updatedEducation)
             {
                 var existingEducation = await _db.Educations
-       .Where(e => e.Id == educationId && e.Ibbi.Id == userId)
-       .FirstOrDefaultAsync();
+                .Where(e => e.Id == educationId && e.IbbiId == userId)
+                .Include(e => e.Ibbi)
+                .FirstOrDefaultAsync();
 
                 if (existingEducation == null) return null; // Not found or doesn't belong to the user
 
@@ -40,6 +46,8 @@ namespace CV.Repository
                 existingEducation.Description = updatedEducation.Description;
                 existingEducation.EducationSite = updatedEducation.EducationSite;
                 existingEducation.Degree = updatedEducation.Degree;
+                existingEducation.Duration = updatedEducation.Duration;
+                existingEducation.IbbiId = updatedEducation.IbbiId;
 
                 await _db.SaveChangesAsync();
                 return existingEducation;

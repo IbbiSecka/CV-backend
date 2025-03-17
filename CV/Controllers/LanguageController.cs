@@ -25,7 +25,7 @@ namespace CV.Controllers
                 Name = lang.Name
             });
 
-            return TypedResults.Ok(languageDtos); return TypedResults.Ok(languages);
+            return TypedResults.Ok(languageDtos); 
         }
 
         private static async Task<IResult> CreateLanguage(ILanguage repo, Models.Language language)

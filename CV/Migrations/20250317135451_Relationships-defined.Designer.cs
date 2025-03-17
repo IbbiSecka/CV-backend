@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250314163715_addedForeignKey")]
-    partial class addedForeignKey
+    [Migration("20250317135451_Relationships-defined")]
+    partial class Relationshipsdefined
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
