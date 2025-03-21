@@ -33,29 +33,44 @@ namespace CV.Controllers
             return TypedResults.Ok(projectDtos);
         }
 
-        private static async Task<IResult> CreateProject(IProject repo, Models.Project project)
+        private static async Task<IResult> CreateProject(IProject repo, ProjectDTO dto)
         {
-            var newProject = await repo.Create(project);
 
-            // Convert to DTO before returning
-            var projectDto = new ProjectDTO
+            var project = new Models.Project
             {
-                Name = newProject.Name,
-                Img = newProject.Img,
-                Description = newProject.Description,
-                Date = newProject.Date,
-                Role = newProject.Role
-            };
+                Name = dto.Name,
+                Img = dto.Img,
+                Description = dto.Description,
+                Date = dto.Date,
+                Role = dto.Role,
+                IbbiId = dto.IbbiId
 
-            return TypedResults.Created($"/projects/{newProject.Id}", projectDto);
+            };
+            await repo.Create(project);
+            return TypedResults.Ok(project);
+            
         }
 
-        private static async Task<IResult> UpdateProject(IProject repo, int id, Models.Project updatedProject)
+        private static async Task<IResult> UpdateProject(IProject repo, int id, ProjectDTO updatedProject)
         {
-            var result = await repo.Update(id, updatedProject);
-            if (result == null) return TypedResults.NotFound();
+            if (updatedProject == null)
+                return TypedResults.BadRequest("Invalid data.");
 
-            // Convert to DTO before returning
+            var project = await repo.GetOne(id);
+            if (project == null)
+                return TypedResults.NotFound("Project not found.");
+
+            // Update existing project instead of creating a new one
+            project.Name = updatedProject.Name;
+            project.Img = updatedProject.Img;
+            project.Description = updatedProject.Description;
+            project.Date = updatedProject.Date;
+            project.Role = updatedProject.Role;
+
+            var result = await repo.Update(id, project);
+            if (result == null)
+                return TypedResults.Problem("Failed to update project.");
+
             var updatedDto = new ProjectDTO
             {
                 Name = result.Name,

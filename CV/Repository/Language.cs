@@ -20,7 +20,13 @@ namespace CV.Repository
 
             public async Task<Models.Language> Create(Models.Language language)
             {
-                _db.Languages.Add(language);
+            var ibbiExists = await _db.Ibbis.AnyAsync(i => i.Id == language.IbbiId);
+            if (!ibbiExists)
+            {
+                throw new Exception("Invalid IbbiId: No matching Ibbi found.");
+            }
+
+            _db.Languages.Add(language);
                 await _db.SaveChangesAsync();
                 return language;
             }
