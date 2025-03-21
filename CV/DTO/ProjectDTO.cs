@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public string Date { get; set; }
         public string Role { get; set; }
+        public int IbbiId { get; set; }
     }
 }

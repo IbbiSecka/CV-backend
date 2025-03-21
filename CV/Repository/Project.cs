@@ -38,6 +38,10 @@ namespace CV.Repository
                 await _db.SaveChangesAsync();
                 return existing;
             }
-        
+
+        public async Task<Models.Project> GetOne(int id)
+        {
+            return await _db.Projects.FirstAsync(x => x.Id == id);
+        }
     }
 }

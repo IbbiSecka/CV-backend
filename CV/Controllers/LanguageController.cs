@@ -1,4 +1,5 @@
 ﻿using CV.DTO;
+using CV.Models;
 using CV.Repository;
 
 namespace CV.Controllers
@@ -22,22 +23,25 @@ namespace CV.Controllers
             // Convert to DTO
             var languageDtos = languages.Select(lang => new LanguageDTO
             {
-                Name = lang.Name
+                Name = lang.Name,
+                IbbiId = lang.IbbiId
             });
 
             return TypedResults.Ok(languageDtos); 
         }
 
-        private static async Task<IResult> CreateLanguage(ILanguage repo, Models.Language language)
+        private static async Task<IResult> CreateLanguage(ILanguage repo, LanguageDTO dto)
         {
-            var newLanguage = await repo.Create(language);
+            
 
             // Convert to DTO before returning
-            var languageDto = new LanguageDTO
+            var language = new Models.Language
             {
-                Name = newLanguage.Name
+                Name = dto.Name,
+                IbbiId = dto.IbbiId
             };
-            return TypedResults.Ok();
+            await repo.Create(language);
+            return TypedResults.Ok(language);
         }
 
         private static async Task<IResult> DeleteLanguage(ILanguage repo, int id)

@@ -7,5 +7,6 @@ namespace CV.Repository
         Task<IEnumerable<Models.Project>> GetAll();
         Task<Models.Project> Create(Models.Project project);
         Task<Models.Project> Update(int id, Models.Project project);
+        Task<Models.Project> GetOne(int id);
     }
 }

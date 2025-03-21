@@ -23,6 +23,8 @@ namespace CV.Repository
           .FirstOrDefaultAsync(x => x.Id == 1);
         }
 
+
+
         public async Task<Ibbi> UpdateIbbi(int id, Ibbi updated)
         {
             var ibbi =  await _db.Ibbis.FindAsync(id);
