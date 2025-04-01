@@ -27,7 +27,8 @@ namespace CV.Controllers
                 Img = proj.Img,
                 Description = proj.Description,
                 Date = proj.Date,
-                Role = proj.Role
+                Role = proj.Role,
+                IbbiId = proj.IbbiId
             });
 
             return TypedResults.Ok(projectDtos);
