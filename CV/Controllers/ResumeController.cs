@@ -15,29 +15,61 @@ namespace CV.Controllers
                 group.MapDelete("/{id}", DeleteResumeExperience);
 
         }
+        private static int ExtractStartYear(string duration)
+        {
+            var parts = duration.Split('-');
+            if (parts.Length < 1) return 0;
+
+            var startYear = parts[0].Trim().Split(' ')[0]; // Extract "2024" from "2024 Aug -"
+            return int.TryParse(startYear, out int year) ? year : 0;
+        }
+
         private static async Task<IResult> GetResumeExperiences(IResume repo)
         {
             var experiences = await repo.GetResumeExperiences();
 
-            // Convert to DTO
+            // Convert to DTO and sort by start year (latest first)
             var experienceDtos = experiences.Select(exp => new ResumeDto
             {
                 CompanyName = exp.CompanyName,
                 CompanyLocation = exp.CompanyLocation,
                 Position = exp.Position,
                 Duration = exp.Duration,
-                Description = exp.Description
-            });
+                Description = exp.Description,
+                IbbiId = exp.IbbiId
+            })
+            .OrderByDescending(x => ExtractStartYear(x.Duration)) // Sort by start year
+
+            .ToList(); // Execute sorting
 
             return TypedResults.Ok(experienceDtos);
         }
 
-        private static async Task<IResult> CreateResumeExperience(IResume repo, Models.ResumeExperience experience)
+        private static async Task<IResult> CreateResumeExperience(IResume repo, ResumeDto newExperience)
         {
-            var newExperience = await repo.AddExperience(experience);
 
             // Convert to DTO before returning
-            var experienceDto = new ResumeDto
+            var experience = new Models.ResumeExperience
+            {
+                CompanyName = newExperience.CompanyName,
+                CompanyLocation = newExperience.CompanyLocation,
+                Position = newExperience.Position,
+                Duration = newExperience.Duration,
+                Description = newExperience.Description,
+                IbbiId = newExperience.IbbiId
+
+            };
+           
+            var ret = await repo.AddExperience(experience);
+            return TypedResults.Ok(ret);
+
+        }
+
+        private static async Task<IResult> UpdateResumeExperience(IResume repo, int id, ResumeDto newExperience)
+        {
+            if (newExperience == null) return TypedResults.BadRequest("Invalid data.");
+
+            var updatedExperience = new Models.ResumeExperience
             {
                 CompanyName = newExperience.CompanyName,
                 CompanyLocation = newExperience.CompanyLocation,
@@ -46,15 +78,10 @@ namespace CV.Controllers
                 Description = newExperience.Description
             };
 
-            return TypedResults.Created($"/resume/{newExperience.Id}", experienceDto);
-        }
-
-        private static async Task<IResult> UpdateResumeExperience(IResume repo, int id, Models.ResumeExperience updatedExperience)
-        {
             var result = await repo.UpdateExperience(id, updatedExperience);
-            if (result == null) return TypedResults.NotFound();
+            if (result == null) return TypedResults.NotFound("Resume experience not found.");
 
-            // Convert to DTO before returning
+            // Convert back to DTO before returning
             var updatedDto = new ResumeDto
             {
                 CompanyName = result.CompanyName,

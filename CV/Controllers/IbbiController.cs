@@ -51,14 +51,23 @@ namespace CV.Controllers
                     Description = getIbbi.Description,
                     DOB = getIbbi.DOB,
                     Img = getIbbi.Img,
-                    Languages = getIbbi.Languages?.Select(ib => new LanguageDTO { Name = ib.Name }).ToList() ?? new List<LanguageDTO>(),
+                    Educations= getIbbi.Educations.Select(ib => new EduDTO { 
+                        Degree = ib.Degree, 
+                        Description = ib.Description,
+                        EducationName = ib.EducationName,
+                        Duration = ib.Duration,
+                        EducationSite = ib.EducationSite,
+                        IbbiId = ib.IbbiId
+                    }).ToList(),
+                    Languages = getIbbi.Languages?.Select(ib => new LanguageDTO { Name = ib.Name, IbbiId = ib.IbbiId }).ToList() ?? new List<LanguageDTO>(),
                     Projects = getIbbi.Projects?.Select(ib => new ProjectDTO
                     {
                         Name = ib.Name,
                         Description = ib.Description,
                         Img = ib.Img,
                         Date = ib.Date,
-                        Role = ib.Role
+                        Role = ib.Role,
+                        IbbiId = ib.IbbiId
                     }).ToList() ?? new List<ProjectDTO>(),
                     ResumeExperiences = getIbbi.resumeExperiences?.Select(ib => new ResumeDto
                     {
@@ -66,12 +75,14 @@ namespace CV.Controllers
                         CompanyLocation = ib.CompanyLocation,
                         Position = ib.Position,
                         Duration = ib.Duration,
-                        Description = ib.Description
+                        Description = ib.Description,
+                        IbbiId = ib.IbbiId
                     }).ToList() ?? new List<ResumeDto>(),
                     Socials = getIbbi.Socials?.Select(ib => new DTO.NewFolder.SocialDTO
                     {
                         Link = ib.Img,
-                        Name = ib.Name
+                        Name = ib.Name,
+                        IbbiId = ib.IbbiId
                     }).ToList() ?? new List<DTO.NewFolder.SocialDTO>()
                 };
 
