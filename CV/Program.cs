@@ -24,9 +24,14 @@ builder.Services.AddScoped<IEducation, EducationRepo>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod());
+        builder => builder
+        .WithOrigins(
+                "https://localhost:3000",  // Your Next.js dev server
+                "http://localhost:3000",   // Fallback for HTTP
+                "https://ibrahimasecka-fvhxg3a8dkegetd4.westeurope-01.azurewebsites.net")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+
 });
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -73,6 +78,12 @@ app.configureEducationController();
 app.configureLanguageController();
 app.configureProjectController();
 app.configureResumeController();
+app.UseHttpsRedirection(); // Should come early
+
+app.UseRouting(); // Must come before CORS
+
+// Add CORS middleware here - AFTER UseRouting() but BEFORE UseAuthorization()
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
