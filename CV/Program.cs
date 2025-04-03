@@ -28,7 +28,9 @@ builder.Services.AddCors(options =>
         .WithOrigins(
                 "https://localhost:3000",  // Your Next.js dev server
                 "http://localhost:3000",   // Fallback for HTTP
-                "https://ibrahimasecka-fvhxg3a8dkegetd4.westeurope-01.azurewebsites.net")
+                "https://ibrahimasecka-fvhxg3a8dkegetd4.westeurope-01.azurewebsites.net",
+                "https://www.ibrahimasecka.com")
+                
         .AllowAnyHeader()
         .AllowAnyMethod());
 
