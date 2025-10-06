@@ -14,7 +14,7 @@ namespace CV.Repository
 
             public async Task<IEnumerable<Models.Project>> GetAll()
             {
-                return await _db.Projects.ToListAsync();
+                return await _db.Projects.OrderBy(x => x.PriorityView).ToListAsync();
             }
 
             public async Task<Models.Project> Create(Models.Project project)

@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     /// <inheritdoc />
-    public partial class Relationshipsdefined : Migration
+    public partial class PriorityViewInProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

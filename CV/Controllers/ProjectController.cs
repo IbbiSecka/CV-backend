@@ -28,7 +28,9 @@ namespace CV.Controllers
                 Description = proj.Description,
                 Date = proj.Date,
                 Role = proj.Role,
-                IbbiId = proj.IbbiId
+                IbbiId = proj.IbbiId,
+                PriorityView = proj.PriorityView
+                
             });
 
             return TypedResults.Ok(projectDtos);
