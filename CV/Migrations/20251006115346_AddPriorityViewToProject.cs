@@ -15,7 +15,7 @@ namespace CV.Migrations
                 table: "Projects",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 5);
         }
 
         /// <inheritdoc />
