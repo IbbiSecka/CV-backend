@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20251006091015_PriorityViewInProject2")]
-    partial class PriorityViewInProject2
+    [Migration("20251006115346_AddPriorityViewToProject")]
+    partial class AddPriorityViewToProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

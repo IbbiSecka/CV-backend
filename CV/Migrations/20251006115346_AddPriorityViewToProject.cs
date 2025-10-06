@@ -1,30 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace CV.Migrations
 {
     /// <inheritdoc />
-    public partial class PriorityViewInProject2 : Migration
+    public partial class AddPriorityViewToProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           migrationBuilder.AddColumn<int>(
-               name: "PriorityView",
-               table: "Projects",
-               type: "integer",
-               nullable: false,
-               defaultValue: 0);
+            migrationBuilder.AddColumn<int>(
+                name: "PriorityView",
+                table: "Projects",
+                type: "integer",
+                nullable: false,
+                defaultValue: 5);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-         name: "PriorityView",
-         table: "Projects");
+                name: "PriorityView",
+                table: "Projects");
         }
     }
 }
