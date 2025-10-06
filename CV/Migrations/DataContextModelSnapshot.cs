@@ -147,6 +147,9 @@ namespace CV.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PriorityView")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
